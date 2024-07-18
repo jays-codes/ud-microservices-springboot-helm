@@ -1,20 +1,20 @@
-deploymentName: accounts-deployment
-serviceName: accounts
-appLabel: accounts
-appName: accounts
+deploymentName: cards-deployment
+serviceName: cards
+appLabel: cards
+appName: cards
 
 replicaCount: 1
 
 image:
-  repository: jaymenorca/accounts
+  repository: jaymenorca/cards
   tag: v13
 
-containerPort: 8082
+containerPort: 8102
 
 service:
   type: ClusterIP
-  port: 8082
-  targetPort: 8082
+  port: 8102
+  targetPort: 8102
 
 appname_enabled: true
 profile_enabled: true
@@ -22,4 +22,4 @@ config_enabled: true
 eureka_enabled: true
 resourceserver_enabled: false
 otel_enabled: true
-kafka_enabled: true
+kafka_enabled: false

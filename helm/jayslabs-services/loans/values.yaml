@@ -1,20 +1,20 @@
-deploymentName: accounts-deployment
-serviceName: accounts
-appLabel: accounts
-appName: accounts
+deploymentName: loans-deployment
+serviceName: loans
+appLabel: loans
+appName: loans
 
 replicaCount: 1
 
 image:
-  repository: jaymenorca/accounts
+  repository: jaymenorca/loans
   tag: v13
 
-containerPort: 8082
+containerPort: 8092
 
 service:
   type: ClusterIP
-  port: 8082
-  targetPort: 8082
+  port: 8092
+  targetPort: 8092
 
 appname_enabled: true
 profile_enabled: true
@@ -22,4 +22,4 @@ config_enabled: true
 eureka_enabled: true
 resourceserver_enabled: false
 otel_enabled: true
-kafka_enabled: true
+kafka_enabled: false

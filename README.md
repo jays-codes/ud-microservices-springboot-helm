@@ -2,5 +2,6 @@
 
 Used with ud-microservices-springboot repo; Repo with Helm related updates [branch:helm]
 
+- branch: helm; configured helm charts for other microservices: loans, card, configserver, eurekaserver, gatewayserver, message
 - branch: helm; configured accounts microservice helm charts; values.yaml, cart.yaml; linked to dependencies
 - created helm chart /template common across jayslabs microservices: service, deployment, configmap

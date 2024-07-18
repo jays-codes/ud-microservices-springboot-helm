@@ -1,0 +1,25 @@
+deploymentName: gatewayserver-deployment
+serviceName: gatewayserver
+appLabel: gatewayserver
+appName: gatewayserver
+
+replicaCount: 1
+
+image:
+  repository: jaymenorca/gatewayserver
+  tag: v13
+
+containerPort: 8052
+
+service:
+  type: LoadBalancer
+  port: 8052
+  targetPort: 8052
+
+appname_enabled: true
+profile_enabled: true
+config_enabled: true
+eureka_enabled: true
+resourceserver_enabled: true
+otel_enabled: true
+kafka_enabled: false
