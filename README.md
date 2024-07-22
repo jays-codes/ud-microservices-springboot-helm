@@ -2,6 +2,7 @@
 
 Used with ud-microservices-springboot repo; Repo with Helm related updates [branch:helm]
 
+- branch: helm; implemented Loki and Tempo service in K8s via bitnami template, modified values.yaml
 - branch: helm; implemented Prometheus service in K8s via bitnami template, modified values.yaml
 - branch: helm; implemented Kafka service in K8s via bitnami template, modified values.yaml
 - branch: helm; implemented Keycloak service in K8s via bitnami template, modified values.yaml
