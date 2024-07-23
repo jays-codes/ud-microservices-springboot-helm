@@ -1,0 +1,25 @@
+deploymentName: configserver-deployment
+serviceName: configserver
+appLabel: configserver
+appName: configserver
+
+replicaCount: 1
+
+image:
+  repository: jaymenorca/configserver
+  tag: v13
+
+containerPort: 8072
+
+service:
+  type: ClusterIP
+  port: 8072
+  targetPort: 8072
+
+appname_enabled: true
+profile_enabled: false
+config_enabled: false
+eureka_enabled: false
+resourceserver_enabled: false
+otel_enabled: true
+kafka_enabled: false

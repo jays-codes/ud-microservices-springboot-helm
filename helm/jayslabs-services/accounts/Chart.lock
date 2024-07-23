@@ -1,0 +1,6 @@
+dependencies:
+- name: jayslabs-common
+  repository: file://../../jayslabs-common
+  version: 0.1.0
+digest: sha256:cdcc718d2be49208cf2377c12040d300b2256957e1d5e89902d1b825ea92812c
+generated: "2024-07-18T08:15:00.3337972-04:00"
