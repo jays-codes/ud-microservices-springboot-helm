@@ -2,6 +2,8 @@
 
 Used with ud-microservices-springboot repo; Repo with Helm related updates [branch:helm]
 
+- ran services in Google Cloud, GKE Cluster; created standard clusters/pods
+- updated helm charts to use server-side service discovery; created discovery server
 - branch: helm; deployed all services and microservices in K8s cluster via helm charts; tried debugging issue with tempo ingester going crashloopbackoff;
 - branch: helm; implemented Grafana service in K8s via bitnami template, modified values.yaml; configured datasources in grafana values.yaml
 - branch: helm; implemented Loki and Tempo service in K8s via bitnami template, modified values.yaml

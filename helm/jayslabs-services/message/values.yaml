@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   repository: jaymenorca/message
-  tag: v13
+  tag: v14
 
 containerPort: 9010
 
@@ -19,7 +19,7 @@ service:
 appname_enabled: true
 profile_enabled: false
 config_enabled: false
-eureka_enabled: false
+discovery_enabled: false
 resourceserver_enabled: false
 otel_enabled: false
 kafka_enabled: true
