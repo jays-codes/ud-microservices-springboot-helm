@@ -1,5 +1,5 @@
 {{- /*
-Copyright Broadcom, Inc. All Rights Reserved.
+Copyright VMware, Inc.
 SPDX-License-Identifier: APACHE-2.0
 */}}
 
@@ -9,7 +9,9 @@ kind: Deployment
 metadata:
   name: {{ template "grafana-loki.compactor.fullname" . }}
   namespace: {{ .Release.Namespace | quote }}
-  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- $versionLabel := dict "app.kubernetes.io/version" ( include "common.images.version" ( dict "imageRoot" .Values.loki.image "chart" .Chart ) ) }}
+  {{- $labels := include "common.tplvalues.merge" ( dict "values" ( list .Values.commonLabels $versionLabel ) "context" . ) }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" $labels "context" $ ) | nindent 4 }}
     app.kubernetes.io/part-of: grafana-loki
     app.kubernetes.io/component: compactor
   {{- if .Values.commonAnnotations }}
@@ -20,7 +22,7 @@ spec:
   {{- if .Values.compactor.updateStrategy }}
   strategy: {{- toYaml .Values.compactor.updateStrategy | nindent 4 }}
   {{- end }}
-  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.compactor.podLabels .Values.commonLabels ) "context" . ) }}
+  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.compactor.podLabels .Values.commonLabels $versionLabel ) "context" . ) }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 6 }}
       app.kubernetes.io/part-of: grafana-loki
@@ -69,7 +71,6 @@ spec:
       {{- if .Values.compactor.podSecurityContext.enabled }}
       securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.compactor.podSecurityContext "context" $) | nindent 8 }}
       {{- end }}
-      enableServiceLinks: {{ .Values.compactor.enableServiceLinks }}
       initContainers:
         {{- if .Values.compactor.initContainers }}
           {{- include "common.tplvalues.render" (dict "value" .Values.compactor.initContainers "context" $) | nindent 8 }}
@@ -94,7 +95,7 @@ spec:
           args:
             - -target=compactor
             - -config.file={{ .Values.loki.dataDir }}/conf/loki.yaml
-            - -compactor.working-directory={{ .Values.loki.dataDir }}/loki/compactor
+            - -boltdb.shipper.compactor.working-directory={{ .Values.loki.dataDir }}/loki/compactor
           {{- if .Values.compactor.extraArgs }}
           {{- include "common.tplvalues.render" (dict "value" .Values.compactor.extraArgs "context" $) | nindent 12 }}
           {{- end }}
@@ -116,8 +117,6 @@ spec:
               name: http
             - containerPort: {{ .Values.loki.containerPorts.gossipRing }}
               name: http-memberlist
-            - containerPort: {{ .Values.loki.containerPorts.grpc }}
-              name: grpc
           {{- if .Values.compactor.resources }}
           resources: {{- toYaml .Values.compactor.resources | nindent 12 }}
           {{- else if ne .Values.compactor.resourcesPreset "none" }}
@@ -128,7 +127,8 @@ spec:
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.customLivenessProbe "context" $) | nindent 12 }}
           {{- else if .Values.compactor.livenessProbe.enabled }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.compactor.livenessProbe "enabled") "context" $) | nindent 12 }}
-            tcpSocket:
+            httpGet:
+              path: /ready
               port: http
           {{- end }}
           {{- if .Values.compactor.customReadinessProbe }}

@@ -1,5 +1,5 @@
 {{- /*
-Copyright Broadcom, Inc. All Rights Reserved.
+Copyright VMware, Inc.
 SPDX-License-Identifier: APACHE-2.0
 */}}
 
@@ -19,7 +19,7 @@ spec:
   {{- if .Values.prometheus.pdb.minAvailable }}
   minAvailable: {{ .Values.prometheus.pdb.minAvailable }}
   {{- end }}
-  {{- if or .Values.prometheus.pdb.maxUnavailable ( not .Values.prometheus.pdb.minAvailable ) }}
-  maxUnavailable: {{ .Values.prometheus.pdb.maxUnavailable | default 1 }}
+  {{- if .Values.prometheus.pdb.maxUnavailable }}
+  maxUnavailable: {{ .Values.prometheus.pdb.maxUnavailable }}
   {{- end }}
 {{- end }}

@@ -1,5 +1,5 @@
 {{- /*
-Copyright Broadcom, Inc. All Rights Reserved.
+Copyright VMware, Inc.
 SPDX-License-Identifier: APACHE-2.0
 */}}
 
@@ -86,10 +86,6 @@ spec:
     {{- end }}
     {{- if .Values.tempo.traces.otlp.http }}
     - name: distributor-otlp-http
-      port: 4318
-      protocol: TCP
-      targetPort: otlp-http
-    - name: distributor-otlp-http-legacy
       port: 55681
       protocol: TCP
       targetPort: otlp-http
@@ -99,7 +95,7 @@ spec:
       port: 4317
       protocol: TCP
       targetPort: otlp-grpc
-    - name: distributor-otlp-grpc-legacy
+    - name: distributor-otlp-legacy
       port: 55680
       protocol: TCP
       targetPort: otlp-grpc
